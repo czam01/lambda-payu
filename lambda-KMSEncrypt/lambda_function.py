@@ -6,6 +6,7 @@ from base64 import b64decode, b64encode
 kms_client = boto3.client('kms')
 
 KMSKEY = kms_client.decrypt(CiphertextBlob=b64decode(os.environ['KMSKEY']))['Plaintext']
+KMSKEY = KMSKEY.decode('utf-8')
 
 def lambda_handler(event, context):
     tc_number = event['Details']['Parameters']['tc_numero']
