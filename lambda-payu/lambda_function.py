@@ -17,7 +17,6 @@ def handle_response_payu(payu_response, connect_details, user_data_crm):
             print (return_json)
             return return_json
     dynamo_reporter.payment_error_report(response_pay, connect_details, user_data_crm)
-    # response_pay["transactionResponse"]["responseMessage"]
     return_json={"status": "failure"}
     print ("Rejected response")
     print (return_json)
@@ -32,7 +31,6 @@ def main_function(connect_details):
         return handle_response_payu(payu_response, connect_details, user_data_crm)
 
     else:
-        # used on the case if theres no data on zoho crm
         print("User Not found on zoho crm end  please ask to start again")
         return_json={"status": "failure"}
         print ("Rejected response")
@@ -44,7 +42,6 @@ def lambda_handler(event, context):
     """ lambda good practices, avoid code on the handler"""
     event_parameters = event['Details']['Parameters']
     event_contact_data = event['Details']['ContactData']['Attributes']
-    #"4097440000000004"  #
     tc_card =(boto3.client('kms').decrypt(CiphertextBlob=b64decode(event_parameters['tc_numero']))['Plaintext']).decode("utf-8")
     user_details = {"cc_numero": event_contact_data['cc_numero'], "tc_numero": tc_card,
                     "tc_number_payments": event_contact_data['tc_cuotas'],
