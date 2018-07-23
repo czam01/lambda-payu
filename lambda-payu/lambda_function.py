@@ -42,9 +42,6 @@ def main_function(connect_details):
 
 def lambda_handler(event, context):
     """ lambda good practices, avoid code on the handler"""
-    print("+++++++++++++base event++++++++++++++++++++++++")
-    print(event)
-    print("++++++++++++++++++++++++++++++++++++++++++++++")
     event_parameters = event['Details']['Parameters']
     event_contact_data = event['Details']['ContactData']['Attributes']
     #"4097440000000004"  #
